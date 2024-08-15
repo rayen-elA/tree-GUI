@@ -41,8 +41,10 @@ public class TreeService {
             tree = newNode;
         } else {
             while (true) {
+
                 parent = current;
                 if (val < current.getVal()) {
+
                     current = current.getLeft();
                     if (current == null) {
                         parent.setLeft(newNode);
@@ -77,6 +79,7 @@ public class TreeService {
             }
             parent = current;
             if (val < current.getVal()) {
+
                 current = current.getLeft();
                 if (current == null) {
                     check=false;

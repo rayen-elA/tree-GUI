@@ -12,28 +12,30 @@ public class Main {
     static List<Integer> list= new ArrayList<>();
     public static void main(String[] args) {
 
-TreeService service=new TreeService(tree);
+        TreeService service=new TreeService(tree);
         JPanel sidepanel=new JPanel();
         JTextArea sidepanelarea =new JTextArea();
-        sidepanel.add(sidepanelarea);
+       JScrollPane scrollPane=new JScrollPane(sidepanelarea);
+       scrollPane.setPreferredSize(new Dimension(200,500));
+        sidepanel.add( scrollPane);
 
-                // Create the main frame
-                JFrame frame = new JFrame("Split Panel Example");
-                frame.setSize(1200, 400);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setLayout(new BorderLayout());
+        // Create the main frame
+        JFrame frame = new JFrame("Split Panel Example");
+        frame.setSize(1200, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
-                // Create the top panel with GridLayout
-                JPanel topPanel = new JPanel(new GridLayout(1, 4));
+        // Create the top panel with GridLayout
+        JPanel topPanel = new JPanel(new GridLayout(1, 4));
 
-                // Create buttons and text fields
-                JButton button1 = new JButton("Add Node");
-                JTextField textField1 = new JTextField();
-                JButton button2 = new JButton("Delete Node");
-                JTextField textField2 = new JTextField();
-                JButton button3 = new JButton("DFS Search");
-                JTextField textField3 = new JTextField();
-                JButton button4 = new JButton("Exit");
+        // Create buttons and text fields
+        JButton button1 = new JButton("Add Node");
+        JTextField textField1 = new JTextField();
+        JButton button2 = new JButton("Delete Node");
+        JTextField textField2 = new JTextField();
+        JButton button3 = new JButton("DFS Search");
+        JTextField textField3 = new JTextField();
+        JButton button4 = new JButton("Exit");
         textField1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,25 +69,18 @@ TreeService service=new TreeService(tree);
         frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "escapeAction");
         frame.getRootPane().getActionMap().put("escapeAction", escapeAction);
 
-                // Add buttons and text fields to the top panel
-                topPanel.add(button1);
-                topPanel.add(textField1);
-                topPanel.add(button2);
-                topPanel.add(textField2);
-                topPanel.add(button3);
-                topPanel.add(textField3);
-                topPanel.add(button4);
+        // Add buttons and text fields to the top panel
+        topPanel.add(button1);
+        topPanel.add(textField1);
+        topPanel.add(button2);
+        topPanel.add(textField2);
+        topPanel.add(button3);
+        topPanel.add(textField3);
+        topPanel.add(button4);
 
-                // Create the bottom panel for drawing
-                JPanel bottomPanel = new JPanel();
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, topPanel, bottomPanel);
-        splitPane.setDividerSize(10); // Make the divider thicker
-        splitPane.setDividerLocation(150); // Initial position of the divider
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        JLabel displayLabel = new JLabel("Text will be displayed here");
-        displayLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        bottomPanel.add(displayLabel);
+        // Create the bottom panel for drawing
+        RecursiveDraw bottomPanel = new RecursiveDraw(tree);
+
 
         // Add action listeners to the buttons to display the text from the text fields
         button1.addActionListener(new ActionListener() {
@@ -95,15 +90,17 @@ TreeService service=new TreeService(tree);
                 frame.revalidate();
                 frame.repaint();
 
-                    String valueholder=textField1.getText();
-                    try{
-                        int value=Integer.parseInt(valueholder);
-                        tree=service.addNode(tree,value);
-                        sidepanelarea.append("value "+value+ " added.\n");
-                    }
-                    catch(NumberFormatException asba){
-                        sidepanelarea.append("brother,give a number please.\n");
-                    }
+                String valueholder=textField1.getText();
+                try{
+                    int value=Integer.parseInt(valueholder);
+                    tree=service.addNode(tree,value);
+                    sidepanelarea.append("value "+value+ " added.\n");
+                    bottomPanel.setTree(tree);
+                    bottomPanel.repaint();
+                }
+                catch(NumberFormatException asba){
+                    sidepanelarea.append("brother,give a number please.\n");
+                }
 
 
 
@@ -123,13 +120,15 @@ TreeService service=new TreeService(tree);
                     if(!(service.searchTree(tree,value,parent,sidepanelarea)instanceof Boolean) && tree!=null) {
                         tree =service.deleteNode(tree,value,sidepanelarea);
                         sidepanelarea.append("value " + value + " deleted.\n");
+                        bottomPanel.setTree(tree);
+                        bottomPanel.repaint();
                     }
                 }
                 catch(NumberFormatException | InterruptedException | NullPointerException asba ){
                     if(tree==null)
                         sidepanelarea.append("tree is empty.\n");
                     else
-                    sidepanelarea.append("brother,give a number please.\n");
+                        sidepanelarea.append("brother,give a number please.\n");
                 }
             }
         });
@@ -161,18 +160,15 @@ TreeService service=new TreeService(tree);
             }
         });
 
+    bottomPanel.add(new JScrollPane());
+        bottomPanel.setVisible(true);
+        // Add the panels to the frame
 
-                // Add the panels to the frame
-                frame.add(topPanel, BorderLayout.NORTH);
-                frame.add(bottomPanel, BorderLayout.CENTER);
-                frame.add(sidepanel,BorderLayout.EAST);
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(bottomPanel, BorderLayout.CENTER);
+        frame.add(sidepanel,BorderLayout.EAST);
 
-                // Make the frame visible
-                frame.setVisible(true);
-            }
-        }
-
-
-
-
-
+        // Make the frame visible
+        frame.setVisible(true);
+    }
+}
