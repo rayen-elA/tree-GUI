@@ -202,6 +202,7 @@ public class TreeService {
         if (searchTreeDFS(tree.getLeft(), val, path))
             return true;
         path.removeLast();
+
         return false;
 
     }

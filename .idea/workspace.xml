@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db91bfb9-fb59-4437-b74e-5baf77a13a2b" name="Changes" comment="[REMOVED] object initialization &#10;[ADDED]clarifying comments">
+    <list default="true" id="db91bfb9-fb59-4437-b74e-5baf77a13a2b" name="Changes" comment="[ADDED] drawing lines between nodes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tree/RecursiveDraw.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tree/RecursiveDraw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tree/TreeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tree/TreeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tree/TreeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tree/TreeView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +57,10 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "C:/Users/rayen/IdeaProjects/Tree-GUI/src/Main.java"
+    "onboarding.tips.debug.path": "C:/Users/rayen/IdeaProjects/Tree-GUI/src/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -111,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723732041079</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="[ADDED] drawing lines between nodes">
+      <option name="closed" value="true" />
+      <created>1723733719700</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723733719700</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -119,7 +133,8 @@
     <MESSAGE value="[ADDED]added button functions and setted the frame" />
     <MESSAGE value="[ADDED]tree drawing &#10;[ADDED] scroll bar to side panel" />
     <MESSAGE value="[REMOVED] object initialization &#10;[ADDED]clarifying comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="[REMOVED] object initialization &#10;[ADDED]clarifying comments" />
+    <MESSAGE value="[ADDED] drawing lines between nodes" />
+    <option name="LAST_COMMIT_MESSAGE" value="[ADDED] drawing lines between nodes" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
