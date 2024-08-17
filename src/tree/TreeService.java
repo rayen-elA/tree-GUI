@@ -2,11 +2,14 @@ package tree;
 
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.Hashtable;
 import java.util.List;
 
 public class TreeService {
     public TreeNode tree;
     public boolean check=true;
+    public Hashtable<Integer,Integer[]> hash=new Hashtable<>();
 
     public TreeService(TreeNode tree) {
         this.tree = tree;
@@ -72,7 +75,7 @@ public class TreeService {
     }
 
 
-    public Object searchTree(TreeNode current,int val, TreeNode parent,JTextArea sidepanelarea){
+    public Object searchTree(TreeNode current,int val, TreeNode parent,TreeView view){
         while (true) {//looking for node to delete
             if (current.getVal() == val) {
                 return parent;
@@ -83,32 +86,35 @@ public class TreeService {
                 current = current.getLeft();
                 if (current == null) {
                     check=false;
-                    sidepanelarea.append("sorry," + val + "doesnt exist\n");
+                    JOptionPane.showMessageDialog(view,"sorry" + val+" doesn't exist ","error occurred",JOptionPane.WARNING_MESSAGE);
+
                     return false;
                 }
             } else {
                 current = current.getRight();
                 if (current == null) {
-                    sidepanelarea.append("sorry" + val + "doesnt exist\n");
+                    JOptionPane.showMessageDialog(view,"sorry" + val+" doesn't exist ","error occurred",JOptionPane.WARNING_MESSAGE);
                     check=false;
                     return false;}
             }
         }
     }
-    public TreeNode deleteNode(TreeNode tree, int val, JTextArea sidepanelarea) {
+    public TreeNode deleteNode(TreeNode tree, int val, TreeView view) {
         TreeNode current = tree;
         TreeNode parent=null;
 
 
 
+
         if (tree == null) {// tree is empty nothing to delete
             check=false;
-            sidepanelarea.append("tree is empty \n");
+            JOptionPane.showMessageDialog(view,"brother,tree is empty.","error occurred",JOptionPane.WARNING_MESSAGE);
+
         } else {
-            if ( searchTree(tree, val,parent,sidepanelarea) instanceof Boolean){
+            if ( searchTree(tree, val,parent,view) instanceof Boolean){
                 return tree;
             }else {
-                parent = (TreeNode) searchTree(tree, val, parent,sidepanelarea);
+                parent = (TreeNode) searchTree(tree, val, parent,view);
                 if (parent != null) {
 
                     if (parent.getLeft() != null) {
@@ -194,6 +200,7 @@ public class TreeService {
     public boolean searchTreeDFS(TreeNode tree, int val, List<Integer> path) {
         if (tree == null)
             return false;
+
         path.add(tree.getVal());
         if (tree.getVal() == val)
             return true;

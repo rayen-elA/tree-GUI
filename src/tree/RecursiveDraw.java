@@ -2,6 +2,7 @@ package tree;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class RecursiveDraw extends JPanel {
     private TreeNode tree;
@@ -26,6 +27,7 @@ public class RecursiveDraw extends JPanel {
         if (tree == null) return;
 
         String holder = String.valueOf(tree.getVal());
+
         g.drawString(holder, x, y - 10);
         g.drawOval(x - 22, y - 40, 50, 50);
 
@@ -44,4 +46,6 @@ public class RecursiveDraw extends JPanel {
         }
 
     }
+
+
 }

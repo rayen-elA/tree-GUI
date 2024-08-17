@@ -15,27 +15,23 @@ public class TreeView extends JFrame implements ActionListener {
     JButton button3;
     JButton button2;
     JButton button1;
-    JTextField textField1;
-    JTextField textField2;
-    JTextField textField3;
-    JPanel sidepanel;
-    JTextArea sidepanelarea;
-    JScrollPane scrollPane ;
-
+    NText textField1;
+    NText textField2;
+    NText textField3;
     RecursiveDraw bottomPanel ;
     JPanel topPanel;
     TreeService service;
+    DfsDraw dfsDraw;
     private ActionEvent e;
 
     public TreeView(){
       //declaring objects(service,panel,frame,text area.....) and setting them up with their corresponding components
        service = new TreeService(tree);
-       sidepanel = new JPanel();
-       sidepanelarea = new JTextArea();
-      scrollPane = new JScrollPane(sidepanelarea);
-      scrollPane.setPreferredSize(new Dimension(200, 500));
+
+
+
        bottomPanel = new RecursiveDraw(tree);
-      sidepanel.add(scrollPane);
+
 
         this.setTitle("Tree-GUI");
       this.setSize(1200, 400);
@@ -46,13 +42,16 @@ public class TreeView extends JFrame implements ActionListener {
       bottomPanel.setVisible(true);
 
       //declaring buttons and text fields
+
        button1 = new JButton("Add Node");
-       textField1 = new JTextField();
+       textField1 = new NText("give node to add");
        button2 = new JButton("Delete Node");
-      textField2 = new JTextField();
+      textField2 = new NText("give node to delete");
        button3 = new JButton("DFS Search");
-       textField3 = new JTextField();
+       textField3 = new NText("give node to search for");
        button4 = new JButton("Exit");
+       dfsDraw=new DfsDraw(tree,list);
+
       //making the frame exist using button "escape"
       this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "escapeAction");
       this.getRootPane().getActionMap().put("escapeAction", escapeAction);
@@ -68,7 +67,7 @@ public class TreeView extends JFrame implements ActionListener {
       //setting up the frame
       this.add(topPanel, BorderLayout.NORTH);
       this.add(bottomPanel, BorderLayout.CENTER);
-      this.add(sidepanel, BorderLayout.EAST);
+    this.add(dfsDraw,BorderLayout.EAST);
       this.setVisible(true);
         textField1.addActionListener(this);
         textField2.addActionListener(this);
@@ -83,12 +82,15 @@ public class TreeView extends JFrame implements ActionListener {
         //text fields
         if(e.getSource()==textField1) {
             button1.doClick();
+            textField1.setText("");
         }
         else if(e.getSource()==textField2){
             button2.doClick();
+            textField2.setText("");
         }
         else if(e.getSource()==textField3) {
             button3.doClick();
+            textField3.setText("");
         }
         //buttons
         if(e.getSource()==button1) {
@@ -99,11 +101,12 @@ public class TreeView extends JFrame implements ActionListener {
             try {
                 int value = Integer.parseInt(valueholder);
                 tree = service.addNode(tree, value);
-                sidepanelarea.append("value " + value + " added.\n");
+
                 bottomPanel.setTree(tree);
                 bottomPanel.repaint();
             } catch (NumberFormatException asba) {
-                sidepanelarea.append("brother,give a number please.\n");
+                JOptionPane.showMessageDialog(this,"brother,give a number please.","error occured",JOptionPane.WARNING_MESSAGE);
+
             }
         }
         else if(e.getSource()==button2){
@@ -111,34 +114,49 @@ public class TreeView extends JFrame implements ActionListener {
 
             try {
                 int value = Integer.parseInt(valueholder);
-                if (!(service.searchTree(tree, value, null, sidepanelarea) instanceof Boolean) && tree != null) {
-                    tree = service.deleteNode(tree, value, sidepanelarea);
-                    sidepanelarea.append("value " + value + " deleted.\n");
-                    bottomPanel.setTree(tree);
+                if (!(service.searchTree(tree, value, null,this) instanceof Boolean) && tree != null) {
+                    tree = service.deleteNode(tree, value, this);
+                     bottomPanel.setTree(tree);
                     bottomPanel.repaint();
                 }
             } catch (NumberFormatException |  NullPointerException p) {
-                if (tree == null)
-                    sidepanelarea.append("tree is empty.\n");
-                else
-                    sidepanelarea.append("brother,give a number please.\n");
+                if (tree == null) {
+                     JOptionPane.showMessageDialog(this,"brother,tree is empty.","error occurred",JOptionPane.WARNING_MESSAGE);
+
+                }
+                else {
+                     JOptionPane.showMessageDialog(this,"brother,give a number please.","error occured",JOptionPane.WARNING_MESSAGE);
+                }
             }
         }else if(e.getSource()==button3){
             try {
                 String valueholder = textField3.getText();
                 int value = Integer.parseInt(valueholder);
+                if (tree == null) {
+
+                    JOptionPane.showMessageDialog(this,"brother,tree is empty.","error occurred",JOptionPane.WARNING_MESSAGE);
+
+                }
                 if (service.searchTreeDFS(tree, value, list)) {
-                    sidepanelarea.append("path is " + list + " \n");
+
+                         JOptionPane.showMessageDialog(this,"path is "+ list ,"Node path",JOptionPane.INFORMATION_MESSAGE);
+
+
+
                     list.clear();
 
                 }
             } catch (NumberFormatException asba) {
-                sidepanelarea.append("brother,give a number please.\n");
-            }
+                JOptionPane.showMessageDialog(this,"brother,give a number please.","error occured",JOptionPane.WARNING_MESSAGE);
+
+             }
 
         }
         else if (e.getSource()==button4) {
-            System.exit(0); // Close the frame
+            int x=JOptionPane.showOptionDialog(this,"هل أنت واثق?","\uD83E\uDD28 \uD83E\uDD28 \uD83E\uDD28 \uD83E\uDD28 \uD83E\uDD28",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE,null,null,0);
+            if(x==0) {
+                System.exit(0);
+            }
         }
 
     }
